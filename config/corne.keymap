@@ -1,0 +1,129 @@
+/*
+ * Corne Mini Keymap
+ * Ported from Keyboardio Atreus (QMK/Vial)
+ *
+ * Features:
+ * - Home row modifiers (bottom row: Ctrl, Shift, Alt, Gui)
+ * - Tap-hold with TAPPING_TERM 200ms equivalent
+ * - 4 layers: Base, Navigation, Reset, Numbers
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+
+// Layer definitions
+#define BASE 0
+#define NAV  1
+#define RST  2
+#define NUM  3
+
+// Japanese IME keys
+#define JP_MHEN INT_MUHENKAN  // 無変換 (LNG2)
+#define JP_HENK INT_HENKAN    // 変換 (LNG1)
+
+/ {
+    behaviors {
+        // Home row mod - タップホールド設定 (TAPPING_TERM 200ms)
+        hm: homerow_mods {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <100>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+        };
+
+        // Layer tap - レイヤー切り替え用
+        lt: layer_tap {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <100>;
+            flavor = "balanced";
+            bindings = <&mo>, <&kp>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        // Layer 0: Base
+        // ┌─────┬─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┬─────┐
+        // │ TAB │  Q  │  W  │  E  │  R  │  T  │   │  Y  │  U  │  I  │  O  │  P  │ BSP │
+        // ├─────┼─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┼─────┤
+        // │ ESC │  A  │  S  │  D  │  F  │  G  │   │  H  │  J  │  K  │  L  │  -  │  '  │
+        // ├─────┼─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┼─────┤
+        // │SHIFT│Z/CTL│X/SFT│C/ALT│V/GUI│  B  │   │  N  │  M  │  ,  │  .  │  /  │ENTER│
+        // └─────┴─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┴─────┘
+        //                         │LNG2 │ SPC │   │ BSP │LNG1 │
+        //                         │ /L1 │/GUI │   │ /L3 │ /L2 │
+        //                         └─────┴─────┘   └─────┴─────┘
+        base_layer {
+            bindings = <
+                &kp TAB    &kp Q       &kp W       &kp E       &kp R       &kp T           &kp Y      &kp U       &kp I       &kp O       &kp P          &kp BSPC
+                &kp ESC    &kp A       &kp S       &kp D       &kp F       &kp G           &kp H      &kp J       &kp K       &kp L       &kp MINUS      &kp SQT
+                &kp LSHFT  &hm LCTRL Z &hm LSHFT X &hm LALT C  &hm LGUI V  &kp B           &kp N      &kp M       &kp COMMA   &kp DOT     &kp FSLH       &kp RET
+                                                   &lt NAV JP_MHEN &hm LGUI SPACE          &lt NUM BSPC &lt RST JP_HENK
+            >;
+        };
+
+        // Layer 1: Navigation (LNG2/無変換 長押し)
+        // ┌─────┬─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┬─────┐
+        // │     │ ESC │     │     │     │ F4  │   │HOME │PGDN │PGUP │ END │     │ DEL │
+        // ├─────┼─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┼─────┤
+        // │     │     │     │     │     │ SPC │   │LEFT │DOWN │ UP  │RIGHT│     │     │
+        // ├─────┼─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┼─────┤
+        // │     │CTRL │SHIFT│ ALT │ GUI │ TAB │   │  [  │  ]  │  ,  │  .  │     │     │
+        // └─────┴─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┴─────┘
+        //                         │     │     │   │     │     │
+        //                         └─────┴─────┘   └─────┴─────┘
+        nav_layer {
+            bindings = <
+                &trans     &kp ESC     &trans      &trans      &trans      &kp F4          &kp HOME   &kp PG_DN   &kp PG_UP   &kp END     &trans         &kp DEL
+                &trans     &trans      &trans      &trans      &trans      &kp SPACE       &kp LEFT   &kp DOWN    &kp UP      &kp RIGHT   &trans         &trans
+                &trans     &kp LCTRL   &kp LSHFT   &kp LALT    &kp LGUI    &kp TAB         &kp LBKT   &kp RBKT    &kp COMMA   &kp DOT     &trans         &trans
+                                                               &trans      &trans          &trans     &trans
+            >;
+        };
+
+        // Layer 2: Reset/System (LNG1/変換 長押し)
+        // ┌─────┬─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┬─────┐
+        // │BTCLR│ BT1 │ BT2 │ BT3 │ BT4 │ BT5 │   │     │     │     │     │     │BOOT │
+        // ├─────┼─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┼─────┤
+        // │ OUT │     │     │     │     │     │   │     │     │     │     │     │     │
+        // ├─────┼─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┼─────┤
+        // │     │     │     │     │     │     │   │     │     │     │     │     │     │
+        // └─────┴─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┴─────┘
+        //                         │     │     │   │     │     │
+        //                         └─────┴─────┘   └─────┴─────┘
+        reset_layer {
+            bindings = <
+                &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4   &trans     &trans      &trans      &trans      &trans         &bootloader
+                &out OUT_TOG &trans    &trans      &trans      &trans      &trans          &trans     &trans      &trans      &trans      &trans         &trans
+                &trans     &trans      &trans      &trans      &trans      &trans          &trans     &trans      &trans      &trans      &trans         &trans
+                                                               &trans      &trans          &trans     &trans
+            >;
+        };
+
+        // Layer 3: Numbers/Symbols (BSPC長押し)
+        // ┌─────┬─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┬─────┐
+        // │  `  │  1  │  2  │  3  │  4  │  5  │   │  6  │  7  │  8  │  9  │  0  │     │
+        // ├─────┼─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┼─────┤
+        // │     │     │     │     │     │     │   │  =  │  \  │  `  │  ;  │  '  │     │
+        // ├─────┼─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┼─────┤
+        // │     │     │     │     │     │     │   │  [  │  ]  │  ,  │  .  │  /  │     │
+        // └─────┴─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┴─────┘
+        //                         │     │     │   │     │     │
+        //                         └─────┴─────┘   └─────┴─────┘
+        num_layer {
+            bindings = <
+                &kp GRAVE  &kp N1      &kp N2      &kp N3      &kp N4      &kp N5          &kp N6     &kp N7      &kp N8      &kp N9      &kp N0         &trans
+                &trans     &trans      &trans      &trans      &trans      &trans          &kp EQUAL  &kp BSLH    &kp GRAVE   &kp SEMI    &kp SQT        &trans
+                &trans     &trans      &trans      &trans      &trans      &trans          &kp LBKT   &kp RBKT    &kp COMMA   &kp DOT     &kp FSLH       &trans
+                                                               &trans      &trans          &trans     &trans
+            >;
+        };
+    };
+};

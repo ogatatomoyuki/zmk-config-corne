@@ -1,0 +1,8 @@
+# ZMK Build Configuration for Corne Mini
+# nice!nano v2 を使用した無線ビルド
+
+include:
+  - board: nice_nano_v2
+    shield: corne_left
+  - board: nice_nano_v2
+    shield: corne_right
