@@ -44,6 +44,18 @@
 **解決策**: Caps Lock (`&kp CAPS`) で代用
 - NAV + R で Caps Lock をトグル
 
+## Atreus との比較
+
+| 機能 | Atreus (QMK) | Corne (ZMK) |
+|------|-------------|-------------|
+| 基本キー | ✅ | ✅ |
+| One-Shot Mods | ✅ | ✅ |
+| マクロ (Undo等) | ✅ | ✅ |
+| Swapper | ✅ NAVのみ保持 | ⚠️ NAV+W保持が必要 |
+| Caps Word | ✅ 自前実装 | ❌ → Caps Lockで代用 |
+| マウススクロール | ✅ | ❌ ZMK v0.3.0非対応 |
+| IMEコンボ | ✅ | ✅ |
+
 ## 解決済みの問題
 
 ### コンボの反応速度
@@ -51,8 +63,10 @@
 - `require-prior-idle-ms = <150>` を追加してタイピング中のコンボ誤発動を防止
 
 ### マクロの修飾キー問題
+- `&kp LG(Z)` のような短縮形は ZMK v0.3.0 で動作しない
 - `macro_press` / `macro_tap` / `macro_release` を使用して明示的に修飾キーを操作
 - `wait-ms` / `tap-ms` を 30ms に設定
+- 例: `<&macro_press &kp LGUI>, <&macro_tap &kp Z>, <&macro_release &kp LGUI>`
 
 ### 右手が動作しない問題
 - 原因: 左右間の Bluetooth ペアリングが壊れていた
@@ -62,7 +76,7 @@
 
 ```
 BASE: QWERTY + 親指に NAV/SPC/SYM | BSPC/ENT
-NAV:  ESC, Swapper, Tabber, CapsWord, 矢印, マクロ
+NAV:  ESC, Swapper, Tabber, CapsLock, 矢印, マクロ(Undo/Cut/Copy/Paste/Redo/Zoom)
 SYM:  数字, 記号, One-Shot Mods
 FUN:  F1-F12, 音量, BT設定（NAV+SYM 同時押し）
 ```
