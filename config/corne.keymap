@@ -33,6 +33,62 @@
             tap-ms = <30>;
             bindings = <&macro_press &kp LCTRL>, <&macro_tap &kp TAB>, <&macro_pause_for_release>, <&macro_release &kp LCTRL>;
         };
+        // Undo (Cmd+Z)
+        mc_undo: mc_undo {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <30>;
+            tap-ms = <30>;
+            bindings = <&macro_press &kp LGUI>, <&macro_tap &kp Z>, <&macro_release &kp LGUI>;
+        };
+        // Cut (Cmd+X)
+        mc_cut: mc_cut {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <30>;
+            tap-ms = <30>;
+            bindings = <&macro_press &kp LGUI>, <&macro_tap &kp X>, <&macro_release &kp LGUI>;
+        };
+        // Copy (Cmd+C)
+        mc_copy: mc_copy {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <30>;
+            tap-ms = <30>;
+            bindings = <&macro_press &kp LGUI>, <&macro_tap &kp C>, <&macro_release &kp LGUI>;
+        };
+        // Paste (Cmd+V)
+        mc_paste: mc_paste {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <30>;
+            tap-ms = <30>;
+            bindings = <&macro_press &kp LGUI>, <&macro_tap &kp V>, <&macro_release &kp LGUI>;
+        };
+        // Redo (Cmd+Shift+Z)
+        mc_redo: mc_redo {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <30>;
+            tap-ms = <30>;
+            bindings = <&macro_press &kp LGUI>, <&macro_press &kp LSHFT>, <&macro_tap &kp Z>, <&macro_release &kp LSHFT>, <&macro_release &kp LGUI>;
+        };
+        // Zoom In (Cmd+=)
+        mc_zmin: mc_zmin {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <30>;
+            tap-ms = <30>;
+            bindings = <&macro_press &kp LGUI>, <&macro_tap &kp EQUAL>, <&macro_release &kp LGUI>;
+        };
+        // Zoom Out (Cmd+-)
+        mc_zmout: mc_zmout {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <30>;
+            tap-ms = <30>;
+            bindings = <&macro_press &kp LGUI>, <&macro_tap &kp MINUS>, <&macro_release &kp LGUI>;
+        };
     };
 
     // --- Combos ---
@@ -102,7 +158,7 @@
             bindings = <
 &none  &kp ESC      &mc_swap   &mc_tab    &kp CAPS    &none          &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &none    &none
 &none  &sk LCTRL    &sk LSHFT  &sk LALT   &sk LGUI    &kp TAB        &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &none  &none
-&none  &kp LG(Z)    &kp LG(X)  &kp LG(C)  &kp LG(V)   &none          &kp LG(LS(Z))  &none      &kp LG(EQUAL)  &kp LG(MINUS)  &none              &none
+&none  &mc_undo     &mc_cut    &mc_copy   &mc_paste   &none          &mc_redo  &none      &mc_zmin   &mc_zmout  &none              &none
                                &trans     &trans      &trans         &trans    &trans     &none
             >;
         };
