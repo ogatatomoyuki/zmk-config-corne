@@ -180,6 +180,4 @@
 };
 
 // --- Caps Word 設定 ---
-&caps_word {
-    continue-list = <UNDERSCORE MINUS BACKSPACE DELETE>;
-};
+// デフォルト設定を使用（カスタマイズなし）
