@@ -67,21 +67,27 @@
     };
 
     // --- Combos ---
+    // Corne key positions:
+    // Row 0:  0  1  2  3  4  5  |  6  7  8  9 10 11
+    // Row 1: 12 13 14 15 16 17  | 18 19 20 21 22 23
+    // Row 2: 24 25 26 27 28 29  | 30 31 32 33 34 35
+    // Thumb:       36 37 38     |    39 40 41
+    //            NAV SPC SYM    | BSPC ENT ---
     combos {
         compatible = "zmk,combos";
 
-        // SPC + BSPC → LNG1 (IME ON)
+        // SPC(37) + BSPC(39) → LNG1 (IME ON)
         combo_lng1 {
             timeout-ms = <80>;
-            key-positions = <37 40>;  // SPC, BSPC
+            key-positions = <37 39>;
             bindings = <&kp LANGUAGE_1>;
             layers = <BASE>;
         };
 
-        // BSPC + ENT → LNG2 (IME OFF)
+        // BSPC(39) + ENT(40) → LNG2 (IME OFF)
         combo_lng2 {
             timeout-ms = <80>;
-            key-positions = <40 41>;  // BSPC, ENT
+            key-positions = <39 40>;
             bindings = <&kp LANGUAGE_2>;
             layers = <BASE>;
         };
@@ -164,8 +170,7 @@
 
 // --- One-Shot Modifier 設定 ---
 &sk {
-    release-after-ms = <1000>;
-    quick-release;
+    release-after-ms = <2000>;
 };
 
 // --- Caps Word 設定 ---
