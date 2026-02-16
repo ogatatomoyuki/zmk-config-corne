@@ -8,7 +8,6 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
-#include <dt-bindings/zmk/mouse.h>
 
 #define BASE 0
 #define NAV  1
@@ -150,15 +149,15 @@
         };
 
         // NAV Layer（左内側親指）
-        //   ESC  SWAP STAB CAPS ---  │  HOME PGDN PGUP END  SCRUP
-        //   skCTL skSFT skALT skGUI TAB│ LEFT DOWN UP  RGHT SCRDN
+        //   ESC  SWAP STAB CAPS ---  │  HOME PGDN PGUP END  ---
+        //   skCTL skSFT skALT skGUI TAB│ LEFT DOWN UP  RGHT ---
         //   UNDO CUT  COPY PST ---  │  REDO --- ZM+  ZM-  ---
         //             ___  ___  ___ │  ___  ___  ---
         NAV_layer {
             display-name = "Nav";
             bindings = <
-&none  &kp ESC      &mc_swap   &mc_tab    &kp CAPS    &none          &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &msc SCRL_UP    &none
-&none  &sk LCTRL    &sk LSHFT  &sk LALT   &sk LGUI    &kp TAB        &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &msc SCRL_DOWN  &none
+&none  &kp ESC      &mc_swap   &mc_tab    &kp CAPS    &none          &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &none    &none
+&none  &sk LCTRL    &sk LSHFT  &sk LALT   &sk LGUI    &kp TAB        &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &none  &none
 &none  &mc_undo     &mc_cut    &mc_copy   &mc_paste   &none          &mc_redo  &none      &mc_zmin   &mc_zmout  &none              &none
                                &trans     &trans      &trans         &trans    &trans     &none
             >;
