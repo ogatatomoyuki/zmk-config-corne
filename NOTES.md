@@ -22,13 +22,17 @@
 - ZMK v0.3.0 では tri-state モジュールに互換性がない
 - ZMK main ブランチではボード名が変更されており、ビルドが通らない可能性
 
-### 2. Caps Word の動作確認
+### 2. Caps Word が動作しない（解決: Caps Lock で代用）
 
-**現状**: NAV + R で caps_word を発動すると文字が表示されなくなる報告あり
+**症状**: caps_word 発動後、文字キーを押しても何も出力されない
 
-**調査項目**:
-- レイヤー切り替えとの相互作用
-- ZMK v0.3.0 での caps_word の動作確認
+**調査結果**:
+- BASE レイヤーに配置しても同様 → レイヤー切り替えは原因ではない
+- USB 接続でも同様 → Bluetooth は原因ではない
+- QMK Atreus でも同じ症状（weak mods 問題）
+
+**解決策**: Caps Lock (`&kp CAPS`) で代用
+- NAV + R で Caps Lock をトグル
 
 ## 解決済みの問題
 

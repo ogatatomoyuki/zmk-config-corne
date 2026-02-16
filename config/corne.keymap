@@ -120,7 +120,7 @@
         BASE_layer {
             display-name = "Base";
             bindings = <
-&none  &kp Q  &kp W  &kp E     &kp R    &kp T        &kp Y     &kp U    &kp I      &kp O    &caps_word &none
+&none  &kp Q  &kp W  &kp E     &kp R    &kp T        &kp Y     &kp U    &kp I      &kp O    &kp P      &none
 &none  &kp A  &kp S  &kp D     &kp F    &kp G        &kp H     &kp J    &kp K      &kp L    &kp MINUS  &none
 &none  &kp Z  &kp X  &kp C     &kp V    &kp B        &kp N     &kp M    &kp COMMA  &kp DOT  &kp FSLH   &none
                      &mo NAV   &kp SPC  &mo SYM      &kp BSPC  &kp RET  &none
@@ -128,14 +128,14 @@
         };
 
         // NAV Layer（左内側親指）
-        //   ESC  SWAP STAB CW  ---  │  HOME PGDN PGUP END  SCRUP
+        //   ESC  SWAP STAB CAPS ---  │  HOME PGDN PGUP END  SCRUP
         //   skCTL skSFT skALT skGUI TAB│ LEFT DOWN UP  RGHT SCRDN
         //   UNDO CUT  COPY PST ---  │  REDO --- ZMIN ZMOUT ---
         //             ___  ___  ___ │  ___  ___  ---
         NAV_layer {
             display-name = "Nav";
             bindings = <
-&none  &kp ESC      &mc_swap   &mc_tab    &caps_word  &none          &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &kp K_SCROLL_UP    &none
+&none  &kp ESC      &mc_swap   &mc_tab    &kp CAPS    &none          &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &kp K_SCROLL_UP    &none
 &none  &sk LCTRL    &sk LSHFT  &sk LALT   &sk LGUI    &kp TAB        &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &kp K_SCROLL_DOWN  &none
 &none  &mc_undo     &mc_cut    &mc_copy   &mc_paste   &none          &mc_redo  &none      &mc_zmin   &mc_zmout  &none              &none
                                &trans     &trans      &trans         &trans    &trans     &none
