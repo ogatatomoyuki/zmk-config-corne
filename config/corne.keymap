@@ -52,17 +52,21 @@
             #binding-cells = <0>;
             bindings = <&kp LG(MINUS)>;
         };
-        // Swapper 代替（シンプル版: Cmd+Tab 1回送信）
+        // Swapper 代替（Cmd+Tab: 明示的修飾キー操作）
         mc_swap: mc_swap {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LG(TAB)>;
+            wait-ms = <30>;
+            tap-ms = <30>;
+            bindings = <&macro_press &kp LGUI>, <&macro_tap &kp TAB>, <&macro_release &kp LGUI>;
         };
-        // Tabber 代替（シンプル版: Ctrl+Tab 1回送信）
+        // Tabber 代替（Ctrl+Tab: 明示的修飾キー操作）
         mc_tab: mc_tab {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LC(TAB)>;
+            wait-ms = <30>;
+            tap-ms = <30>;
+            bindings = <&macro_press &kp LCTRL>, <&macro_tap &kp TAB>, <&macro_release &kp LCTRL>;
         };
     };
 
