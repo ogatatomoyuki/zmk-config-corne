@@ -151,14 +151,14 @@
         // NAV Layer（左内側親指）
         //   ESC  SWAP STAB CAPS ---  │  HOME PGDN PGUP END  ---
         //   skCTL skSFT skALT skGUI TAB│ LEFT DOWN UP  RGHT ---
-        //   UNDO CUT  COPY PST ---  │  REDO --- ZM+  ZM-  ---
+        //   UNDO CUT  COPY PST REDO │  ---  ---  ---  ZM+  ZM-
         //             ___  ___  ___ │  ___  ___  ---
         NAV_layer {
             display-name = "Nav";
             bindings = <
-&none  &kp ESC      &mc_swap   &mc_tab    &kp CAPS    &none          &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &none    &none
-&none  &sk LCTRL    &sk LSHFT  &sk LALT   &sk LGUI    &kp TAB        &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &none  &none
-&none  &mc_undo     &mc_cut    &mc_copy   &mc_paste   &none          &mc_redo  &none      &mc_zmin   &mc_zmout  &none              &none
+&none  &kp ESC      &mc_swap   &mc_tab    &kp CAPS    &none          &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &none      &none
+&none  &sk LCTRL    &sk LSHFT  &sk LALT   &sk LGUI    &kp TAB        &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &none      &none
+&none  &mc_undo     &mc_cut    &mc_copy   &mc_paste   &mc_redo       &none     &none      &none      &mc_zmin   &mc_zmout  &none
                                &trans     &trans      &trans         &trans    &trans     &none
             >;
         };
