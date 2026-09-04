@@ -87,6 +87,34 @@ FUN:  F1-F12, 音量, BT設定（NAV+SYM 同時押し）
 |------|------|
 | SPC + BSPC | LNG1（IME ON）|
 | BSPC + ENT | LNG2（IME OFF）|
+| D + F | Ctrl+B（tmux prefix）|
+
+## 未解決タスク
+
+### roam（RPi5）からの BLE ペアリングが失敗する
+
+**日付**: 2026-02-21
+
+**症状**:
+- `bluetoothctl scan on` で `Corne Mini` は検出される（`F3:A0:DC:21:3E:BF`）
+- `Connected: yes` まではいくが `pair` で `ConnectionAttemptFailed` または `AuthenticationFailed`
+- USBドングル（TP-Link UB500, `88:A2:9E:57:CF:07`）でも内蔵BT（`10:5A:95:76:22:46`）でも同様
+- `btmgmt pair` もタイムアウト
+
+**試行済み**:
+- Corne 側 BT_CLR 実行済み
+- 左右とも settings_reset + 本番ファーム再フラッシュ済み（BT名は `CorneCustom` → `Corne Mini` に更新確認）
+- roam 側でデバイス remove → 再スキャン → ペアリング
+- `pairable on` 有効化
+- bluetooth サービス再起動
+- `btmgmt --index 1 pair` 直接試行
+
+**未試行**:
+- Mac からの BT 接続でキーマップ動作確認
+- roam の BlueZ バージョン確認・アップデート
+- roam の `/var/lib/bluetooth/` 内の古いペアリング情報を手動削除
+- ドングルのファームウェア更新確認
+- `journalctl -u bluetooth` でエラーログ詳細確認
 
 ## ビルド方法
 
@@ -99,7 +127,29 @@ gh run list --limit 3
 # ファームウェアダウンロード
 gh run download <run_id>
 
-# フラッシュ
+# フラッシュ（dd を使うこと。cp は不完全な書き込みになる場合あり）
 # 1. リセットボタン2回押し → NICENANO ドライブがマウント
-# 2. .uf2 ファイルをドラッグ&ドロップ
+# 2. dd で書き込み
+dd if=firmware.uf2 of=/Volumes/NICENANO/firmware.uf2 bs=4096
 ```
+
+## UF2 フラッシュ時の注意（2026-02-21 発見）
+
+**`cp` ではなく `dd` を使うこと。**
+
+- `cp` は `fcopyfile failed: Input/output error` を出し、書き込みが不完全になる場合がある
+- 見かけ上エラーでも device が自動リブートするため成功に見える
+- 実際には前のファームウェア（settings_reset 等）が残ったままになることがある
+- `dd` なら確実に書き込める：
+  ```bash
+  dd if=firmware.uf2 of=/Volumes/NICENANO/firmware.uf2 bs=4096
+  ```
+- I/O error は device のリブートによるもので正常
+
+## 変更履歴
+
+### 2026-02-21
+- NAV レイヤー: ZM+/ZM- を1つ左に移動（Charybdis と統一）
+- tmux コンボ追加: D+F → Ctrl+B（timeout 80ms, require-prior-idle 150ms）
+- Caps Word コメント削除
+- Mac から BT ペアリング成功（settings_reset → 本番ファーム の手順）
